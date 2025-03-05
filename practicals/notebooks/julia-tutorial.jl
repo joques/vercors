@@ -448,9 +448,6 @@ end
 # ╔═╡ 6b4ea6f0-adff-42c1-8fe6-849f8b0ae7c5
 my_func2(4; arg4 = 6)
 
-# ╔═╡ 75ad6090-316c-45c7-917c-afee7d206af8
-
-
 # ╔═╡ 26fa223a-a0af-4def-858e-905b2204d84d
 map(x -> 2x, [1,2,3,4,5])
 
@@ -460,11 +457,11 @@ the_val = 10
 # ╔═╡ 70530d82-96e2-4a86-935f-f0abb931c6fd
 the_val |> x -> x^2 |> x -> x + 10
 
-# ╔═╡ 8a71eb3e-6732-4430-a381-3879e2d623b9
-md"""Note: Consider pipelining a collection"""
-
 # ╔═╡ 98aa483e-62b2-4afc-8589-8ec986fa9ea2
+[1,2,3,4] |> l1 -> map(x -> x^2, l1) |> l2 -> map(x -> x + 10, l2)
 
+# ╔═╡ 57ff9a26-4f40-4263-b16e-eff9083bed4d
+[4,5,6,7] |> a -> a .^ 2 |> a-> a .+ 10
 
 # ╔═╡ 629a7912-f251-46a4-8626-322ede6e273d
 function squareit(x)
@@ -538,9 +535,6 @@ md"""See illustration"""
 # ╔═╡ bbd505d3-2ce5-4404-97fa-48e45015e581
 num_obs = 1000
 
-# ╔═╡ 8946715c-19fd-4ba2-81df-c3cd6958f256
-
-
 # ╔═╡ 04a8303e-3e0a-40a6-8e96-e139c2585437
 num_features = 10
 
@@ -569,7 +563,7 @@ X_df[!, :y] = y
 size(X_df)
 
 # ╔═╡ 7351f724-757f-4e0f-a86c-86d869529d0e
-p1 = data(X_df) * mapping(:x1, :y)
+p1 = data(X_df) * mapping(:x1, :y, color = :y)
 
 # ╔═╡ 9b4d0251-35f3-4e9d-b445-bf83d1c3228d
 draw(p1)
@@ -613,7 +607,7 @@ p5 = data(coffees_df) * mapping(:Operating_Hours_Per_Day, :Daily_Revenue) * (vis
 draw(p5)
 
 # ╔═╡ 23d70bee-5bb3-41b2-a095-5e1fbcc96a7f
-
+md"""The End!"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -2867,12 +2861,11 @@ version = "3.6.0+0"
 # ╠═fe88416a-998c-4622-a97f-561cd0d2c46d
 # ╠═4daeefbd-3a54-4b17-901a-0e59d351a53e
 # ╠═6b4ea6f0-adff-42c1-8fe6-849f8b0ae7c5
-# ╠═75ad6090-316c-45c7-917c-afee7d206af8
 # ╠═26fa223a-a0af-4def-858e-905b2204d84d
 # ╠═fd047441-8bc3-4482-9307-606c0e0c3436
 # ╠═70530d82-96e2-4a86-935f-f0abb931c6fd
-# ╠═8a71eb3e-6732-4430-a381-3879e2d623b9
 # ╠═98aa483e-62b2-4afc-8589-8ec986fa9ea2
+# ╠═57ff9a26-4f40-4263-b16e-eff9083bed4d
 # ╠═629a7912-f251-46a4-8626-322ede6e273d
 # ╠═aae4866a-532c-4ea0-adc7-e4d04962f69a
 # ╠═5bc76054-3f35-487e-a407-cb9c20f49ceb
@@ -2892,7 +2885,6 @@ version = "3.6.0+0"
 # ╠═af0683c2-a988-4947-a609-e5f81d1b3f50
 # ╠═0d3bbc43-a592-40da-ad00-6273cb9e3807
 # ╠═bbd505d3-2ce5-4404-97fa-48e45015e581
-# ╠═8946715c-19fd-4ba2-81df-c3cd6958f256
 # ╠═04a8303e-3e0a-40a6-8e96-e139c2585437
 # ╠═d1cf3c51-675c-4cec-8fc9-fcbff63a3800
 # ╠═114cb891-0a34-46f5-a65a-32a757840741
