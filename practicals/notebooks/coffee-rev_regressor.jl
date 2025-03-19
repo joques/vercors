@@ -34,6 +34,9 @@ using MLJLinearModels
 # ╔═╡ 39661fce-4d94-4617-9852-e131f09fc7d7
 using MLJLIBSVMInterface
 
+# ╔═╡ 250ee9dc-f44f-4d73-9694-ef9d0a1df425
+using LIBSVM
+
 # ╔═╡ 5fdc42ee-f01e-4045-874d-1958ad96ee67
 PlutoUI.TableOfContents()
 
@@ -2564,8 +2567,8 @@ version = "3.6.0+0"
 # ╠═8866f16a-792a-4282-adc9-69580d61c7f6
 # ╠═8ebba4d2-5265-4369-9d66-8444040252c2
 # ╠═a63c10d5-f456-4490-9c87-df41141ca57f
-# ╠═01535952-28ab-4d59-8201-9efd1170dc65
 # ╠═39661fce-4d94-4617-9852-e131f09fc7d7
+# ╠═250ee9dc-f44f-4d73-9694-ef9d0a1df425
 # ╠═5fdc42ee-f01e-4045-874d-1958ad96ee67
 # ╠═5b0ba0fa-bd01-45e6-b3db-60c183fee2c1
 # ╠═318a5811-10f0-4545-abfb-5a87e473f622
