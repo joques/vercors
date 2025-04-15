@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.4
+# v0.20.5
 
 using Markdown
 using InteractiveUtils
@@ -91,9 +91,6 @@ X_fs_mach = machine(Standardizer(), X_raw)
 # ╔═╡ 78f0ec03-7a47-48c6-984e-87bce80fdea4
 X_norm = MLJ.transform(MLJ.fit!(X_fs_mach), X_raw)
 
-# ╔═╡ 11104715-c8d8-45fe-a5d4-3499c9ad220f
-
-
 # ╔═╡ bb6cd8c6-4711-44c7-97d8-00637c6dcb2a
 henc_mach = machine(OneHotEncoder(), X_norm) |> MLJ.fit!
 
@@ -140,6 +137,48 @@ cm1 = confmat(mode.(Ŷ_t1), Y[test_set])
 
 # ╔═╡ 6537f025-a6ef-4750-98f3-138a49915bd9
 accuracy(cm1)
+
+# ╔═╡ e3cfeb26-ef60-4ef0-8ebf-6c80721a8944
+tuned_log_cla_model = TunedModel(model=log_cla_model, resampling=CV(nfolds=10, rng=234), repeats=5, tuning=Grid(), range=range(log_cla_model, :lambda, lower=0.01, upper=0.9), measure=accuracy)
+
+# ╔═╡ d85b529e-2a4f-4f11-9fbb-62e70582f5be
+piped_log_cla_model2 = ContinuousEncoder() |> tuned_log_cla_model
+
+# ╔═╡ 0c0af60e-18c3-4bf1-bc5b-c13fdc6167e6
+piped_log_cla_mach2 = machine(piped_log_cla_model2, X_fin, Y)
+
+# ╔═╡ b142c861-93b0-4d93-b9f3-9acd0ca3947d
+MLJ.fit!(piped_log_cla_mach2, rows=train_set)
+
+# ╔═╡ 1c12294c-5852-4d78-bcfb-253877c80e8d
+Ŷ_t11 = MLJ.predict(piped_log_cla_mach2, rows=test_set) 
+
+# ╔═╡ 8733223e-6cff-4e79-ab72-03ae112224f0
+cm11 = confmat(mode.(Ŷ_t11), Y[test_set])
+
+# ╔═╡ e04f8c17-5aac-4058-a3d5-9fcb0ee46e6e
+accuracy(cm11)
+
+# ╔═╡ ccb76f93-6c56-412a-bd31-c4a6fbe7d464
+tuned_log_cla_model2 = TunedModel(model=log_cla_model, resampling=CV(nfolds=10, rng=234), repeats=5, tuning=Grid(), range=range(log_cla_model, :penalty, values=[:l1,:l2,:en]), measure=accuracy)
+
+# ╔═╡ 33586a02-feaf-45f0-89ad-529b2024a91d
+piped_log_cla_model3 = ContinuousEncoder() |> tuned_log_cla_model2
+
+# ╔═╡ f5346def-2623-49c4-8e40-695771b7e254
+piped_log_cla_mach3 = machine(piped_log_cla_model3, X_fin, Y)
+
+# ╔═╡ eb65627d-b807-4fa7-88e2-04242a108a71
+MLJ.fit!(piped_log_cla_mach3, rows=train_set)
+
+# ╔═╡ b61bf59f-660c-4094-a76c-761cfcb6e773
+Ŷ_t12 = MLJ.predict(piped_log_cla_mach3, rows=test_set) 
+
+# ╔═╡ 28b99fa9-f5b5-4f12-82da-d1bca86be0fd
+cm12 = confmat(mode.(Ŷ_t12), Y[test_set])
+
+# ╔═╡ ba74e200-085c-4a3f-ba9a-cabccb020d84
+accuracy(cm12)
 
 # ╔═╡ 9cd811e8-a089-4190-83bd-68e22b4e51a1
 md"### Support Vector Machine"
@@ -291,7 +330,6 @@ MLJLIBSVMInterface = "~0.2.1"
 MLJLinearModels = "~0.10.0"
 NearestNeighborModels = "~0.2.3"
 PlutoUI = "~0.7.61"
-Statistics = "~1.11.1"
 StatsBase = "~0.34.4"
 """
 
@@ -301,7 +339,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.11.4"
 manifest_format = "2.0"
-project_hash = "88785b6d4950ddd4d3cd950a2b17258ac90c9dc9"
+project_hash = "12a2425c624346931ed370501f62d76269f3ab36"
 
 [[deps.ARFFFiles]]
 deps = ["CategoricalArrays", "Dates", "Parsers", "Tables"]
@@ -2722,7 +2760,6 @@ version = "3.6.0+0"
 # ╠═6faf9e94-e3e0-489b-9236-a5612894622f
 # ╠═39dfeed3-53e3-4c0f-a5b0-4d60f420fee5
 # ╠═78f0ec03-7a47-48c6-984e-87bce80fdea4
-# ╠═11104715-c8d8-45fe-a5d4-3499c9ad220f
 # ╠═bb6cd8c6-4711-44c7-97d8-00637c6dcb2a
 # ╠═0dc87842-4e7f-4b18-a698-fb90957767d2
 # ╠═f9c3e634-d1de-4f3d-b445-5570f29692e0
@@ -2738,6 +2775,20 @@ version = "3.6.0+0"
 # ╠═5198ba91-6072-4264-aaea-d5fb262e8bf4
 # ╠═e51f775a-56af-40a8-9233-d08b6d6812a5
 # ╠═6537f025-a6ef-4750-98f3-138a49915bd9
+# ╠═e3cfeb26-ef60-4ef0-8ebf-6c80721a8944
+# ╠═d85b529e-2a4f-4f11-9fbb-62e70582f5be
+# ╠═0c0af60e-18c3-4bf1-bc5b-c13fdc6167e6
+# ╠═b142c861-93b0-4d93-b9f3-9acd0ca3947d
+# ╠═1c12294c-5852-4d78-bcfb-253877c80e8d
+# ╠═8733223e-6cff-4e79-ab72-03ae112224f0
+# ╠═e04f8c17-5aac-4058-a3d5-9fcb0ee46e6e
+# ╠═ccb76f93-6c56-412a-bd31-c4a6fbe7d464
+# ╠═33586a02-feaf-45f0-89ad-529b2024a91d
+# ╠═f5346def-2623-49c4-8e40-695771b7e254
+# ╠═eb65627d-b807-4fa7-88e2-04242a108a71
+# ╠═b61bf59f-660c-4094-a76c-761cfcb6e773
+# ╠═28b99fa9-f5b5-4f12-82da-d1bca86be0fd
+# ╠═ba74e200-085c-4a3f-ba9a-cabccb020d84
 # ╠═9cd811e8-a089-4190-83bd-68e22b4e51a1
 # ╠═8352d34a-57ae-42ee-8e44-7c190ed9d82b
 # ╠═09ab8efc-50c8-421a-a55e-bbcb8c682598
