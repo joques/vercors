@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.4
+# v0.20.6
 
 using Markdown
 using InteractiveUtils
@@ -369,7 +369,6 @@ DataFrames = "~1.7.0"
 MLJ = "~0.20.7"
 MLJLinearModels = "~0.10.0"
 PlutoUI = "~0.7.61"
-Statistics = "~1.11.1"
 StatsBase = "~0.34.4"
 """
 
@@ -377,9 +376,9 @@ StatsBase = "~0.34.4"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.11.4"
+julia_version = "1.11.5"
 manifest_format = "2.0"
-project_hash = "6e1bc5106854e4db6d1bcb089fa9746823080563"
+project_hash = "1dd51ba3a7321b072c1786253554785a6bfe8046"
 
 [[deps.ARFFFiles]]
 deps = ["CategoricalArrays", "Dates", "Parsers", "Tables"]
@@ -1848,7 +1847,7 @@ version = "3.2.4+0"
 [[deps.OpenLibm_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "05823500-19ac-5b8b-9628-191a04bc5112"
-version = "0.8.1+4"
+version = "0.8.5+0"
 
 [[deps.OpenML]]
 deps = ["ARFFFiles", "HTTP", "JSON", "Markdown", "Pkg", "Scratch"]
