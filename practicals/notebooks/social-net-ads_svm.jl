@@ -61,9 +61,6 @@ using LightGBM
 # ╔═╡ c683304d-87b9-4070-9d99-4a26f8c8ea79
 using MLJXGBoostInterface
 
-# ╔═╡ 9acc8fc6-c003-44b3-80fd-d03454b2084c
-
-
 # ╔═╡ c696948f-1ec9-4371-ac24-ec095c140ead
 PlutoUI.TableOfContents()
 
@@ -125,10 +122,10 @@ Ŷ_test1 = MLJ.predict(log_cla_mach, rows=test_set)
 cm1 = confmat(mode.(Ŷ_test1), Y[test_set])
 
 # ╔═╡ 53c3b4e3-a46b-4fd9-a94f-3203c89ae8a0
-@show false_positive(cm1)
+@show MLJ.false_positive(cm1)
 
 # ╔═╡ d504b892-4185-4bf5-afe0-0fbd586b3922
-@show accuracy(cm1)
+@show MLJ.accuracy(cm1)
 
 # ╔═╡ 290938b3-39c9-48a3-b803-ef6c74c7f85d
 md"### SVM Classifier"
@@ -149,10 +146,10 @@ MLJ.fit!(svm_cla_mach1, rows=train_set)
 Ŷ_test2 = MLJ.predict(svm_cla_mach1, rows=test_set)
 
 # ╔═╡ 4c4ddc51-ce61-4758-89b7-e900cb63bdcf
-cm_cla = ConfusionMatrix()(Ŷ_test2, Y[test_set])
+cm_cla = MLJ.ConfusionMatrix()(Ŷ_test2, Y[test_set])
 
 # ╔═╡ 67025ee3-852b-460c-a8be-cf2dea54cb6a
-accuracy(cm_cla)
+MLJ.accuracy(cm_cla)
 
 # ╔═╡ a40e69b6-1183-434b-89e5-b68b1fa155ad
 svm_cla_model2 = SVC(kernel=LIBSVM.Kernel.Polynomial)
@@ -167,10 +164,10 @@ MLJ.fit!(svm_cla_mach2, rows=train_set)
 Ŷ_test3 = MLJ.predict(svm_cla_mach2, rows=test_set)
 
 # ╔═╡ df1e92cc-f3ba-4984-9f40-9dc258b0e138
-cm_cla2 = ConfusionMatrix()(Ŷ_test3, Y[test_set])
+cm_cla2 = MLJ.ConfusionMatrix()(Ŷ_test3, Y[test_set])
 
 # ╔═╡ d31216dc-2f55-4539-af09-280da31f2fd8
-accuracy(cm_cla2)
+MLJ.accuracy(cm_cla2)
 
 # ╔═╡ 80dd3773-5bd6-4b12-b061-708b270888e3
 svm_cla_model3 = SVC(kernel=LIBSVM.Kernel.RadialBasis)
@@ -185,10 +182,10 @@ MLJ.fit!(svm_cla_mach3, rows=train_set)
 Ŷ_test4 = MLJ.predict(svm_cla_mach3, rows=test_set)
 
 # ╔═╡ 1ce2383d-0780-4b85-8d09-9a6cafd25a79
-cm_cla3 = ConfusionMatrix()(Ŷ_test4, Y[test_set])
+cm_cla3 = MLJ.ConfusionMatrix()(Ŷ_test4, Y[test_set])
 
 # ╔═╡ 99f22268-d6e4-4b2e-ac56-cb268b01e8f3
-accuracy(cm_cla3)
+MLJ.accuracy(cm_cla3)
 
 # ╔═╡ ebc2d73f-e17a-4697-a923-60db64e4c553
 svm_cla_model4 = SVC(kernel=LIBSVM.Kernel.Sigmoid)
@@ -203,10 +200,10 @@ MLJ.fit!(svm_cla_mach4, rows=train_set)
 Ŷ_test5 = MLJ.predict(svm_cla_mach4, rows=test_set)
 
 # ╔═╡ a27af3b2-2b2a-41c2-8ce6-a4da15976b72
-cm_cla4 = ConfusionMatrix()(Ŷ_test5, Y[test_set])
+cm_cla4 = MLJ.ConfusionMatrix()(Ŷ_test5, Y[test_set])
 
 # ╔═╡ ee65a300-1892-4411-bdc5-e06f1116ef7b
-accuracy(cm_cla4)
+MLJ.accuracy(cm_cla4)
 
 # ╔═╡ af359739-3a24-474d-8a94-699c641e7d71
 range_c = range(svm_cla_model3, :cost, lower=0.1, upper=5)
@@ -224,10 +221,10 @@ MLJ.fit!(tuned_svm_cla_mach3)
 Ŷ_test6 = MLJ.predict(tuned_svm_cla_mach3, rows=test_set)
 
 # ╔═╡ 7e746c1b-d6e9-4295-91a9-1960b7295d03
-cm_tcla4 = ConfusionMatrix()(Ŷ_test6, Y[test_set])
+cm_tcla4 = MLJ.ConfusionMatrix()(Ŷ_test6, Y[test_set])
 
 # ╔═╡ 9401089d-c9cc-4e41-b6cb-dcd580c550c0
-accuracy(cm_tcla4)
+MLJ.accuracy(cm_tcla4)
 
 # ╔═╡ 212975f2-cdc7-4aa4-af8f-473b51e2d450
 md"### Tree-based Models"
@@ -251,10 +248,10 @@ MLJ.fit!(dt_mach, rows=train_set)
 Ŷ_test_dt1 = MLJ.predict(dt_mach, rows=test_set)
 
 # ╔═╡ 13757acb-1a84-4df8-8ed9-b7ca35bdfedb
-cm_dt = confusion_matrix(mode.(Ŷ_test_dt1), Y[test_set])
+cm_dt = MLJ.confusion_matrix(mode.(Ŷ_test_dt1), Y[test_set])
 
 # ╔═╡ 4452a040-7e1e-4104-b8d3-7561166c344c
-accuracy(cm_dt)
+MLJ.accuracy(cm_dt)
 
 # ╔═╡ d413387c-4a7a-4423-8667-6fbfd6003f20
 Booster = @load EvoTreeClassifier pkg=EvoTrees
@@ -278,7 +275,7 @@ MLJ.fit!(booster_mach, rows=train_set)
 cmdt = confusion_matrix(mode.(Ŷ_test7), Y[test_set])
 
 # ╔═╡ 5c11c5b9-524a-4496-9342-0d9a9e0e4dd9
-accuracy(cmdt)
+MLJ.accuracy(cmdt)
 
 # ╔═╡ 2f596ee9-9a40-409d-ac8e-899fdffb3b31
 Booster2 = @load AdaBoostStumpClassifier pkg=DecisionTree
@@ -299,7 +296,19 @@ MLJ.fit!(booster_stump_mach, rows=train_set)
 cm_bs = confusion_matrix(mode.(Ŷ_test_bs), Y[test_set])
 
 # ╔═╡ 44e0c96d-1970-4692-b1e3-0e02f99f7223
-accuracy(cm_bs)
+MLJ.accuracy(cm_bs)
+
+# ╔═╡ 34834398-fa6c-456c-be69-446c93c0803f
+bs_roc = MLJ.roc_curve(Ŷ_test_bs, Y[test_set])
+
+# ╔═╡ 3fb0836b-3586-4730-8602-cc8cd8741936
+ mapping(bs_roc[1]) * visual(Lines) |> draw()
+
+# ╔═╡ 1a0bb104-c4b3-4f2c-9af7-7b263945a488
+ mapping(bs_roc[2]) * visual(Lines) |> draw()
+
+# ╔═╡ 9708544b-880b-4af1-83d4-08f69e38824a
+MLJ.auc(Ŷ_test_bs, Y[test_set])
 
 # ╔═╡ c607cf43-abc4-4081-ba93-d03af440eb96
 BalancedBaggingClassifier = @load BalancedBaggingClassifier pkg=MLJBalancing
@@ -3043,7 +3052,6 @@ version = "3.6.0+0"
 # ╠═78e6e733-75a0-49f5-8982-700dd2e9faf1
 # ╠═8edaa64d-24ab-4aca-b4a7-e0a06f6c5079
 # ╠═c683304d-87b9-4070-9d99-4a26f8c8ea79
-# ╠═9acc8fc6-c003-44b3-80fd-d03454b2084c
 # ╠═c696948f-1ec9-4371-ac24-ec095c140ead
 # ╠═32672dce-5be4-4612-80e0-af9a40ba3cd9
 # ╠═92c16ca7-c192-42b7-a28e-6445bf879fb4
@@ -3123,6 +3131,10 @@ version = "3.6.0+0"
 # ╠═9afae36a-2b6a-4254-b765-de8a9391801d
 # ╠═c04f3980-bba0-45ac-9b23-2466d7755af2
 # ╠═44e0c96d-1970-4692-b1e3-0e02f99f7223
+# ╠═34834398-fa6c-456c-be69-446c93c0803f
+# ╠═3fb0836b-3586-4730-8602-cc8cd8741936
+# ╠═1a0bb104-c4b3-4f2c-9af7-7b263945a488
+# ╠═9708544b-880b-4af1-83d4-08f69e38824a
 # ╠═c607cf43-abc4-4081-ba93-d03af440eb96
 # ╠═7a95ecf3-7e1f-4e94-a5fa-6ef331b0a3b5
 # ╠═0f7da8c5-9b0e-48fe-82f9-4ce5454c2093
