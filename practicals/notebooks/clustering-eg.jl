@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.6
+# v0.20.8
 
 using Markdown
 using InteractiveUtils
@@ -47,6 +47,9 @@ using MLJMultivariateStatsInterface
 using BetaML
 
 # ╔═╡ 56bc9bb1-8b99-47d6-b442-05dbd0c8e3e3
+using ClusterValidityIndices
+
+# ╔═╡ bb153c18-e184-42e1-9fbb-f1dd80eb3333
 
 
 # ╔═╡ 33635457-ae15-4415-9da4-c99967a88f00
@@ -311,7 +314,16 @@ levels(pred5)
 report(cls_mach5).point_types
 
 # ╔═╡ 5d07b72e-68af-4446-879d-c6edc4d3d39c
+my_cvi = DB()
 
+# ╔═╡ a3ea135d-ecd9-4fbf-9a3c-c56ef80221f8
+my_cvi2 = cSIL()
+
+# ╔═╡ fcd4a16c-1e01-440d-ad4d-2fdd6f2e478e
+criterion_value = get_cvi!(my_cvi, X_pca_mat', rpt3.assignments)
+
+# ╔═╡ 5c6e3418-9afb-41e9-b660-816c78381582
+cv2 = get_cvi!(my_cvi2, X_pca_mat', rpt3.assignments)
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -320,6 +332,7 @@ AlgebraOfGraphics = "cbdf2221-f076-402e-a563-3d30da359d67"
 BetaML = "024491cd-cc6b-443e-8034-08ea7eb7db2b"
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
 CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
+ClusterValidityIndices = "2fefd308-f647-4698-a2f0-e90cfcbca9ad"
 Clustering = "aaaa29a8-35af-508c-8bc3-b662a17a0fe5"
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 Distances = "b4f34e82-e78d-54a5-968a-f98e89d6e8f7"
@@ -336,6 +349,7 @@ AlgebraOfGraphics = "~0.9.5"
 BetaML = "~0.12.1"
 CSV = "~0.10.15"
 CairoMakie = "~0.13.2"
+ClusterValidityIndices = "~0.6.4"
 Clustering = "~0.15.8"
 DataFrames = "~1.7.0"
 Distances = "~0.10.12"
@@ -353,7 +367,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.11.5"
 manifest_format = "2.0"
-project_hash = "2a583f594d16f9c575ab069abdf881e17fde8fe7"
+project_hash = "85693fd059fd93693057abcb2bb28d9cacfdb16c"
 
 [[deps.ARFFFiles]]
 deps = ["CategoricalArrays", "Dates", "Parsers", "Tables"]
@@ -685,6 +699,12 @@ git-tree-sha1 = "05ba0d07cd4fd8b7a39541e31a7b0254704ea581"
 uuid = "fb6a15b2-703c-40df-9091-08a04967cfa9"
 version = "0.1.13"
 
+[[deps.ClusterValidityIndices]]
+deps = ["DocStringExtensions", "ElasticArrays", "LinearAlgebra", "Logging", "NumericalTypeAliases", "Pkg", "PrecompileSignatures", "ProgressBars", "Random", "Statistics"]
+git-tree-sha1 = "0d6cad7f4eeb5895ce063ed6920db6b7bee97d9b"
+uuid = "2fefd308-f647-4698-a2f0-e90cfcbca9ad"
+version = "0.6.4"
+
 [[deps.Clustering]]
 deps = ["Distances", "LinearAlgebra", "NearestNeighbors", "Printf", "Random", "SparseArrays", "Statistics", "StatsBase"]
 git-tree-sha1 = "3e22db924e2945282e70c33b75d4dde8bfa44c94"
@@ -937,6 +957,12 @@ deps = ["Dates", "Statistics"]
 git-tree-sha1 = "98fdf08b707aaf69f524a6cd0a67858cefe0cfb6"
 uuid = "792122b4-ca99-40de-a6bc-6742525f08b6"
 version = "0.3.0"
+
+[[deps.ElasticArrays]]
+deps = ["Adapt"]
+git-tree-sha1 = "75e5697f521c9ab89816d3abeea806dfc5afb967"
+uuid = "fdbdab4c-e67f-52f5-8c3f-e7b388dad3d4"
+version = "1.2.12"
 
 [[deps.EnumX]]
 git-tree-sha1 = "bdb1942cd4c45e3c678fd11569d5cccd80976237"
@@ -1954,6 +1980,12 @@ version = "1.1.1"
 uuid = "ca575930-c2e3-43a9-ace4-1e988b2c1908"
 version = "1.2.0"
 
+[[deps.NumericalTypeAliases]]
+deps = ["DocStringExtensions", "Pkg"]
+git-tree-sha1 = "656ff8ab29b5bc82e43e9dd07e9b756fa536fcc4"
+uuid = "be9b823e-291e-41a1-b8ce-806204e78f92"
+version = "0.2.4"
+
 [[deps.Observables]]
 git-tree-sha1 = "7438a59546cf62428fc9d1bc94729146d37a7225"
 uuid = "510215fc-4207-5dde-b226-833fc4488ee2"
@@ -2160,6 +2192,11 @@ git-tree-sha1 = "36d8b4b899628fb92c2749eb488d884a926614d3"
 uuid = "2dfb63ee-cc39-5dd5-95bd-886bf059d720"
 version = "1.4.3"
 
+[[deps.PrecompileSignatures]]
+git-tree-sha1 = "18ef344185f25ee9d51d80e179f8dad33dc48eb1"
+uuid = "91cefc8d-f054-46dc-8f8c-26e11d7c5411"
+version = "3.0.3"
+
 [[deps.PrecompileTools]]
 deps = ["Preferences"]
 git-tree-sha1 = "5aa36f7049a63a1528fe8f7c3f2113413ffd4e1f"
@@ -2192,6 +2229,12 @@ version = "2.4.0"
 deps = ["Unicode"]
 uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 version = "1.11.0"
+
+[[deps.ProgressBars]]
+deps = ["Printf"]
+git-tree-sha1 = "b437cdb0385ed38312d91d9c00c20f3798b30256"
+uuid = "49802e3a-d2f1-5c88-81d8-b72133a6f568"
+version = "1.5.1"
 
 [[deps.ProgressMeter]]
 deps = ["Distributed", "Printf"]
@@ -3157,6 +3200,7 @@ version = "1.4.1+2"
 # ╠═35b55cb1-1dee-4413-9da9-82ece8f4ba45
 # ╠═4b487ce7-0003-4d54-b986-b3ef7c9e05ef
 # ╠═56bc9bb1-8b99-47d6-b442-05dbd0c8e3e3
+# ╠═bb153c18-e184-42e1-9fbb-f1dd80eb3333
 # ╠═33635457-ae15-4415-9da4-c99967a88f00
 # ╠═567d55b5-00cb-4c3b-aa3d-6e890143b522
 # ╠═b7f30490-94ca-476e-955c-8921ddf8d3ca
@@ -3243,5 +3287,8 @@ version = "1.4.1+2"
 # ╠═55f86c2e-f19f-4243-8fbb-cb1d1675864f
 # ╠═6ce68889-3f6f-4369-be02-0a015b5c8b2f
 # ╠═5d07b72e-68af-4446-879d-c6edc4d3d39c
+# ╠═a3ea135d-ecd9-4fbf-9a3c-c56ef80221f8
+# ╠═fcd4a16c-1e01-440d-ad4d-2fdd6f2e478e
+# ╠═5c6e3418-9afb-41e9-b660-816c78381582
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
